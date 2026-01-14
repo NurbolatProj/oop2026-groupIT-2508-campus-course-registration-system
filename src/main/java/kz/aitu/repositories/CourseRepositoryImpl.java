@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class   CourseRepositoryImpl implements CourseRepository {
+public class    CourseRepositoryImpl implements CourseRepository {
 
     private final IDB db;
 

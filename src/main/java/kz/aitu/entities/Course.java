@@ -7,6 +7,8 @@ public class Course {
 
     public Course() {}
 
+
+
     public Course(String title, int credits) {
         this.title = title;
         this.credits = credits;

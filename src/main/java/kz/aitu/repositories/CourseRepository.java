@@ -7,3 +7,4 @@ public interface CourseRepository {
     void create(Course course);
     List<Course> findAll();
 }
+

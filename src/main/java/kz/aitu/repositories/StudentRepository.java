@@ -8,3 +8,4 @@ public interface StudentRepository {
     Student findById(int id);
     List<Student> findAll();
 }
+

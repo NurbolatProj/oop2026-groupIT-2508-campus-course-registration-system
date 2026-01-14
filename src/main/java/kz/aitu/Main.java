@@ -7,6 +7,7 @@ import kz.aitu.services.StudentService;
 public class Main {
     public static void main(String[] args) {
 
+
         StudentService service = new StudentService(
                 new StudentRepositoryImpl(new PostgresDB())
         );

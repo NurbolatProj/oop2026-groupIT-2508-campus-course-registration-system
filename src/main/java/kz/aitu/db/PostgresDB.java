@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 
 public class PostgresDB implements IDB {
 
-    @Override
+    @Override 
     public Connection getConnection() {
         try {
             return DriverManager.getConnection(

@@ -13,9 +13,24 @@ public class CourseService {
         this.repo = repo;
     }
 
-    public void addCourse(String title, int credits) {
-        repo.create(new Course(title, credits));
+    public void addCourse(
+            String title,
+            int credits,
+            Integer instructorId,
+            Integer departmentId,
+            Integer trimesterId,
+            Integer classroomId
+    ) {
+        repo.create(new Course(
+                title,
+                credits,
+                instructorId,
+                departmentId,
+                trimesterId,
+                classroomId
+        ));
     }
+
 
     public List<Course> getAllCourses() {
         return repo.findAll();

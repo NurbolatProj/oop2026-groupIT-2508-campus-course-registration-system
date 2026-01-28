@@ -31,12 +31,11 @@ public class EnrollmentRepositoryImpl implements EnrollmentRepository {
 
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return new Enrollment(
-                        rs.getInt("id"),
-                        studentId,
-                        courseId
-                );
+                Enrollment e = new Enrollment();
+                e.setId(rs.getInt("id"));
+                return e;
             }
+
 
             throw new RuntimeException("Enrollment failed");
 
@@ -70,24 +69,34 @@ public class EnrollmentRepositoryImpl implements EnrollmentRepository {
     public List<Enrollment> findAll() {
         List<Enrollment> list = new ArrayList<>();
 
-        String sql = "SELECT id, student_id, course_id FROM enrollments";
+        String sql = """
+        SELECT
+            e.id,
+            s.name AS student_name,
+            c.title AS course_title
+        FROM enrollments e
+        JOIN students s ON e.student_id = s.id
+        JOIN courses c ON e.course_id = c.id
+    """;
 
         try (Connection conn = db.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                list.add(new Enrollment(
-                        rs.getInt("id"),
-                        rs.getInt("student_id"),
-                        rs.getInt("course_id")
-                ));
+                Enrollment e = new Enrollment();
+                e.setId(rs.getInt("id"));
+                e.setStudentName(rs.getString("student_name"));
+                e.setCourseTitle(rs.getString("course_title"));
+
+                list.add(e);
             }
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex.getMessage());
         }
 
         return list;
     }
+
 }

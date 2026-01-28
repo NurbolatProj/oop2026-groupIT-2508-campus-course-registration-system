@@ -16,6 +16,9 @@ public class Main {
         StudentRepository studentRepo = new StudentRepositoryImpl(db);
         CourseRepository courseRepo = new CourseRepositoryImpl(db);
         EnrollmentRepository enrollmentRepo = new EnrollmentRepositoryImpl(db);
+        InstructorRepository instructorRepo = new InstructorRepositoryImpl(db);
+        ClassroomRepository classroomRepo = new ClassroomRepositoryImpl(db);
+
 
         StudentService studentService = new StudentService(studentRepo);
         CourseService courseService = new CourseService(courseRepo);
@@ -41,10 +44,11 @@ public class Main {
 
             System.out.print("Choose option: ");
             int choice = scanner.nextInt();
+            scanner.nextLine();
+
 
             try {
                 switch (choice) {
-
                     case 1 -> {
                         scanner.nextLine();
                         System.out.print("Student name: ");
@@ -67,28 +71,36 @@ public class Main {
                         System.out.print("Credits: ");
                         int credits = scanner.nextInt();
 
-                        System.out.print("Instructor ID (or 0 if none): ");
-                        Integer instructorId = scanner.nextInt();
-                        if (instructorId == 0) instructorId = null;
+                        scanner.nextLine();
+                        System.out.print("Instructor name (or empty if none): ");
+                        String instructorName = scanner.nextLine();
 
-                        System.out.print("Department ID (or 0 if none): ");
-                        Integer departmentId = scanner.nextInt();
-                        if (departmentId == 0) departmentId = null;
+                        Integer instructorId = null;
+                        if (!instructorName.isBlank()) {
+                            instructorId = instructorRepo.findIdByName(instructorName.trim());
+                            if (instructorId == null) {
+                                System.out.println("❌ Instructor not found");
+                                break;
+                            }
+                        }
 
-                        System.out.print("Trimester ID (or 0 if none): ");
-                        Integer trimesterId = scanner.nextInt();
-                        if (trimesterId == 0) trimesterId = null;
 
-                        System.out.print("Classroom ID (or 0 if none): ");
-                        Integer classroomId = scanner.nextInt();
-                        if (classroomId == 0) classroomId = null;
+                        System.out.print("Classroom room (or empty if none): ");
+                        String room = scanner.nextLine();
+
+                        Integer classroomId = null;
+                        if (!room.isBlank()) {
+                            classroomId = classroomRepo.findIdByRoom(room.trim());
+                            if (classroomId == null) {
+                                System.out.println("❌ Classroom not found");
+                                break;
+                            }
+                        }
 
                         courseService.addCourse(
                                 title,
                                 credits,
                                 instructorId,
-                                departmentId,
-                                trimesterId,
                                 classroomId
                         );
 
@@ -97,15 +109,31 @@ public class Main {
 
 
                     case 3 -> {
-                        System.out.print("Student ID: ");
-                        int studentId = scanner.nextInt();
 
-                        System.out.print("Course ID: ");
-                        int courseId = scanner.nextInt();
+                        System.out.print("Student name: ");
+
+                        String studentName = scanner.nextLine();
+
+                        Integer studentId = studentRepo.findIdByName(studentName.trim());
+                        if (studentId == null) {
+                            System.out.println("❌ Student not found");
+                            break;
+                        }
+
+                        System.out.print("Course title: ");
+                        String courseTitle = scanner.nextLine();
+
+                        Integer courseId = courseRepo.findIdByTitle(courseTitle.trim());
+                        if (courseId == null) {
+                            System.out.println("❌ Course not found");
+                            break;
+                        }
 
                         enrollmentService.registerStudent(studentId, courseId);
                         System.out.println("✅ Student enrolled");
                     }
+
+
 
                     case 4 -> {
                         System.out.println(studentService.getAll());

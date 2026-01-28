@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class    CourseRepositoryImpl implements CourseRepository {
+public class CourseRepositoryImpl implements CourseRepository {
 
     private final IDB db;
 
@@ -21,8 +21,8 @@ public class    CourseRepositoryImpl implements CourseRepository {
         String sql = """
         
                 INSERT INTO courses
-        (title, credits, instructor_id, department_id, trimester_id, classroom_id)
-        VALUES (?, ?, ?, ?, ?, ?)
+        (title, credits, instructor_id, classroom_id)
+        VALUES (?, ?, ?, ?)
         """;
 
         try (Connection con = db.getConnection();
@@ -31,9 +31,7 @@ public class    CourseRepositoryImpl implements CourseRepository {
             ps.setString(1, course.getTitle());
             ps.setInt(2, course.getCredits());
             ps.setObject(3, course.getInstructorId());
-            ps.setObject(4, course.getDepartmentId());
-            ps.setObject(5, course.getTrimesterId());
-            ps.setObject(6, course.getClassroomId());
+            ps.setObject(4, course.getClassroomId());
 
             ps.execute();
 
@@ -47,16 +45,17 @@ public class    CourseRepositoryImpl implements CourseRepository {
     public List<Course> findAll() {
         List<Course> list = new ArrayList<>();
 
-        String sql =
-                """
-        SELECT id, title,
-                credits,
-               instructor_id,
-               department_id,
-               trimester_id,
-               classroom_id
-                    FROM courses
-        """;
+        String sql = """
+        SELECT
+            c.id,
+            c.title,
+            c.credits,
+            c.instructor_id,
+            c.classroom_id,
+            i.name AS instructor_name
+        FROM courses c
+        LEFT JOIN instructors i ON c.instructor_id = i.id
+    """;
 
         try (Connection con = db.getConnection();
              Statement st = con.createStatement();
@@ -67,18 +66,38 @@ public class    CourseRepositoryImpl implements CourseRepository {
                         rs.getString("title"),
                         rs.getInt("credits"),
                         (Integer) rs.getObject("instructor_id"),
-                        (Integer) rs.getObject("department_id"),
-                        (Integer) rs.getObject("trimester_id"),
                         (Integer) rs.getObject("classroom_id")
                 );
                 c.setId(rs.getInt("id"));
+                c.setInstructorName(rs.getString("instructor_name"));
+
                 list.add(c);
             }
+
 
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
         return list;
+    }
+    @Override
+    public Integer findIdByTitle(String title) {
+        String sql = "SELECT id FROM courses WHERE title = ?";
+
+        try (Connection con = db.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, title);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("id");
+            }
+            return null;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

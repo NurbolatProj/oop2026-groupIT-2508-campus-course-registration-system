@@ -82,4 +82,24 @@ public class StudentRepositoryImpl implements StudentRepository {
         }
         return list;
     }
+    @Override
+    public Integer findIdByName(String name) {
+        String sql = "SELECT id FROM students WHERE name = ?";
+
+        try (Connection con = db.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, name);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("id");
+            }
+            return null;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

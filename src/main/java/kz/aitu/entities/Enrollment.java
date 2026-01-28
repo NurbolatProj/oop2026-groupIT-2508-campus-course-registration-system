@@ -1,36 +1,44 @@
 package kz.aitu.entities;
 
 public class Enrollment {
+
     private int id;
-    private int studentId;
-    private int courseId;
+    private String studentName;
+    private String courseTitle;
 
-    public Enrollment(int id, int studentId, int courseId) {
-        this.id = id;
-        this.studentId = studentId;
-        this.courseId = courseId;
-    }
-
-    public Enrollment(int studentId, int courseId) {
-        this.studentId = studentId;
-        this.courseId = courseId;
+    public Enrollment() {
     }
 
     public int getId() {
         return id;
     }
 
-    public int getStudentId() {
-        return studentId;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public int getCourseId() {
-        return courseId;
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+
+    public String getCourseTitle() {
+        return courseTitle;
+    }
+
+    public void setCourseTitle(String courseTitle) {
+        this.courseTitle = courseTitle;
     }
 
     @Override
     public String toString() {
-        return "Enrollment{id=%d, studentId=%d, courseId=%d}"
-                .formatted(id, studentId, courseId);
+        return "Enrollment{" +
+                "id=" + id +
+                ", student='" + studentName + '\'' +
+                ", course='" + courseTitle + '\'' +
+                '}';
     }
 }

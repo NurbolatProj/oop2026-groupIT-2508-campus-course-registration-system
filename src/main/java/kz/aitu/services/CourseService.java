@@ -17,16 +17,12 @@ public class CourseService {
             String title,
             int credits,
             Integer instructorId,
-            Integer departmentId,
-            Integer trimesterId,
             Integer classroomId
     ) {
         repo.create(new Course(
                 title,
                 credits,
                 instructorId,
-                departmentId,
-                trimesterId,
                 classroomId
         ));
     }

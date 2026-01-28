@@ -23,7 +23,7 @@ public class DatabaseConnection {
             String value = props.getProperty("DB_PASSWORD");
 
             if (value == null || value.isBlank()) {
-                throw new RuntimeException("DB_PASSWORD is not set in config.properties");
+                throw new RuntimeException("DB_PASSWORD isn't set in config.properties");
             }
 
             return value;

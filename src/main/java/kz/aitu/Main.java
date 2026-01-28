@@ -57,6 +57,7 @@ public class Main {
                         System.out.println("✅ Student added");
                     }
 
+
                     case 2 -> {
                         scanner.nextLine();
 

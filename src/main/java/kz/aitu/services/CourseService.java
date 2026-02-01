@@ -1,6 +1,7 @@
 package kz.aitu.services;
 
 import kz.aitu.entities.Course;
+import kz.aitu.factory.CourseFactory;
 import kz.aitu.repositories.CourseRepository;
 
 import java.util.List;
@@ -13,20 +14,23 @@ public class CourseService {
         this.repo = repo;
     }
 
-    public void addCourse(
+    public boolean addCourse(
+            String type,
             String title,
             int credits,
             Integer instructorId,
             Integer classroomId
     ) {
-        repo.create(new Course(
+        Course course = CourseFactory.createCourse(
+                type,
                 title,
                 credits,
                 instructorId,
                 classroomId
-        ));
-    }
+        );
 
+        return repo.create(course);
+    }
 
     public List<Course> getAllCourses() {
         return repo.findAll();

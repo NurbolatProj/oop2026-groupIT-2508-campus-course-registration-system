@@ -17,7 +17,7 @@ public class StudentRepositoryImpl implements StudentRepository {
     }
 
     @Override
-    public void create(Student student) {
+    public boolean create(Student student) {
         String sql = "INSERT INTO public.students(name, age) VALUES (?, ?)";
 
         try (Connection con = db.getConnection();
@@ -25,18 +25,19 @@ public class StudentRepositoryImpl implements StudentRepository {
 
             ps.setString(1, student.getName());
             ps.setInt(2, student.getAge());
-            ps.execute();
+            ps.executeUpdate();
 
-        } catch (Exception e) {
+            return true; //
+
+        } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException("Create failed: " + e.getMessage());
+            return false;
         }
     }
 
-
     @Override
     public Student findById(int id) {
-        String sql = "SELECT * FROM public.students WHERE id=?";
+        String sql = "SELECT * FROM public.students WHERE id = ?";
 
         try (Connection con = db.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -44,8 +45,9 @@ public class StudentRepositoryImpl implements StudentRepository {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
-            if (!rs.next())
+            if (!rs.next()) {
                 throw new NotFoundException("Student not found");
+            }
 
             Student s = new Student(
                     rs.getString("name"),
@@ -77,14 +79,16 @@ public class StudentRepositoryImpl implements StudentRepository {
                 list.add(s);
             }
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
         return list;
     }
+
     @Override
     public Integer findIdByName(String name) {
-        String sql = "SELECT id FROM students WHERE name = ?";
+        String sql = "SELECT id FROM public.students WHERE name = ?";
 
         try (Connection con = db.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -97,9 +101,8 @@ public class StudentRepositoryImpl implements StudentRepository {
             }
             return null;
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-
 }

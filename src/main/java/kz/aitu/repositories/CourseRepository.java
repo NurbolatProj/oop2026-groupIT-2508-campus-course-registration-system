@@ -1,11 +1,10 @@
 package kz.aitu.repositories;
 
 import kz.aitu.entities.Course;
-import java.util.List;
 
-public interface CourseRepository {
-    void create(Course course);
-    List<Course> findAll();
+public interface CourseRepository extends Repository<Course> {
+
     Integer findIdByTitle(String title);
+
 }
 

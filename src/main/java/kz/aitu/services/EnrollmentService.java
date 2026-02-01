@@ -1,6 +1,9 @@
 package kz.aitu.services;
 
 import kz.aitu.entities.Enrollment;
+import kz.aitu.entities.Student;
+import kz.aitu.entities.Course;
+import kz.aitu.entities.StudentSchedule;
 import kz.aitu.exceptions.ConflictException;
 import kz.aitu.repositories.EnrollmentRepository;
 
@@ -25,5 +28,16 @@ public class EnrollmentService {
 
     public List<Enrollment> getAll() {
         return repo.findAll();
+    }
+
+
+    public StudentSchedule buildStudentSchedule(
+            Student student,
+            List<Course> courses
+    ) {
+        return new StudentSchedule.Builder()
+                .student(student)
+                .courses(courses)
+                .build();
     }
 }

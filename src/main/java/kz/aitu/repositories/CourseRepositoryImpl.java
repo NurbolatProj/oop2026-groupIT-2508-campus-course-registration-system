@@ -7,7 +7,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class CourseRepositoryImpl implements CourseRepository {
 
     private final IDB db;
@@ -17,12 +16,11 @@ public class CourseRepositoryImpl implements CourseRepository {
     }
 
     @Override
-    public void create(Course course) {
+    public boolean create(Course course) {
         String sql = """
-        
-                INSERT INTO courses
-        (title, credits, instructor_id, classroom_id)
-        VALUES (?, ?, ?, ?)
+            INSERT INTO courses
+            (title, credits, instructor_id, classroom_id)
+            VALUES (?, ?, ?, ?)
         """;
 
         try (Connection con = db.getConnection();
@@ -33,29 +31,30 @@ public class CourseRepositoryImpl implements CourseRepository {
             ps.setObject(3, course.getInstructorId());
             ps.setObject(4, course.getClassroomId());
 
-            ps.execute();
+            ps.executeUpdate();
+            return true;   // ✅ УСПЕХ
 
-        } catch (Exception e) {
-            throw new RuntimeException("Create course failed: " + e.getMessage());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;  // ✅ ОШИБКА
         }
     }
-
 
     @Override
     public List<Course> findAll() {
         List<Course> list = new ArrayList<>();
 
         String sql = """
-        SELECT
-            c.id,
-            c.title,
-            c.credits,
-            c.instructor_id,
-            c.classroom_id,
-            i.name AS instructor_name
-        FROM courses c
-        LEFT JOIN instructors i ON c.instructor_id = i.id
-    """;
+            SELECT
+                c.id,
+                c.title,
+                c.credits,
+                c.instructor_id,
+                c.classroom_id,
+                i.name AS instructor_name
+            FROM courses c
+            LEFT JOIN instructors i ON c.instructor_id = i.id
+        """;
 
         try (Connection con = db.getConnection();
              Statement st = con.createStatement();
@@ -74,13 +73,13 @@ public class CourseRepositoryImpl implements CourseRepository {
                 list.add(c);
             }
 
-
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
         return list;
     }
+
     @Override
     public Integer findIdByTitle(String title) {
         String sql = "SELECT id FROM courses WHERE title = ?";
@@ -96,7 +95,7 @@ public class CourseRepositoryImpl implements CourseRepository {
             }
             return null;
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }

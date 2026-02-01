@@ -11,6 +11,8 @@ import java.util.List;
 
 public class EnrollmentService {
 
+    private static final int MAX_COURSE_CAPACITY = 30;
+
     private final EnrollmentRepository repo;
 
     public EnrollmentService(EnrollmentRepository repo) {
@@ -25,6 +27,11 @@ public class EnrollmentService {
         if (hasTimeConflict(studentId, courseId)) {
             throw new ConflictException("Time conflict between courses");
         }
+
+        if (isCourseFull(courseId)) {
+            throw new ConflictException("Course capacity exceeded");
+        }
+
 
         return repo.enroll(studentId, courseId);
     }
@@ -48,4 +55,9 @@ public class EnrollmentService {
                 .courses(courses)
                 .build();
     }
+
+    private boolean isCourseFull(int courseId) {
+        return false;
+    }
 }
+

@@ -98,6 +98,7 @@ public class Main {
                         }
 
                         courseService.addCourse(
+                                "LECTURE",
                                 title,
                                 credits,
                                 instructorId,

@@ -35,4 +35,12 @@ public class CourseService {
     public List<Course> getAllCourses() {
         return repo.findAll();
     }
+
+    public List<Course> getHighCreditCourses(int minCredits) {
+        return repo.findAll()
+                .stream()
+                .filter(c -> c.getCredits() >= minCredits)
+                .toList();
+    }
+
 }

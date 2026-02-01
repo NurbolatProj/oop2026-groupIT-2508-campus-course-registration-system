@@ -19,11 +19,19 @@ public class EnrollmentService {
 
     public Enrollment registerStudent(int studentId, int courseId) {
         if (repo.exists(studentId, courseId)) {
-            throw new ConflictException(
-                    "Student already enrolled in this course"
-            );
+            throw new ConflictException("Student already enrolled");
         }
+
+        if (hasTimeConflict(studentId, courseId)) {
+            throw new ConflictException("Time conflict between courses");
+        }
+
         return repo.enroll(studentId, courseId);
+    }
+
+    private boolean hasTimeConflict(int studentId, int courseId) {
+        // Stub logic for assignment 4
+        return false;
     }
 
     public List<Enrollment> getAll() {

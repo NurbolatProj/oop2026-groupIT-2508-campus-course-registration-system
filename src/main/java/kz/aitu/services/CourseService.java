@@ -1,6 +1,7 @@
 package kz.aitu.services;
 
 import kz.aitu.entities.Course;
+import kz.aitu.entities.Result;
 import kz.aitu.factory.CourseFactory;
 import kz.aitu.repositories.CourseRepository;
 
@@ -14,7 +15,24 @@ public class CourseService {
         this.repo = repo;
     }
 
-    public boolean addCourse(
+    public void addCourse(
+            String type,
+            String title,
+            int credits,
+            Integer instructorId,
+            Integer classroomId
+    ) {
+        Course course = CourseFactory.createCourse(
+                type,
+                title,
+                credits,
+                instructorId,
+                classroomId
+        );
+        repo.create(course);
+    }
+
+    public Result<Course> addCourseWithResult(
             String type,
             String title,
             int credits,
@@ -29,7 +47,8 @@ public class CourseService {
                 classroomId
         );
 
-        return repo.create(course);
+        repo.create(course);
+        return Result.success(course);
     }
 
     public List<Course> getAllCourses() {
@@ -42,5 +61,4 @@ public class CourseService {
                 .filter(c -> c.getCredits() >= minCredits)
                 .toList();
     }
-
 }

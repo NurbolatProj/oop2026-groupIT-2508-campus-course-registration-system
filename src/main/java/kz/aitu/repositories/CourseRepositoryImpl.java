@@ -32,11 +32,11 @@ public class CourseRepositoryImpl implements CourseRepository {
             ps.setObject(4, course.getClassroomId());
 
             ps.executeUpdate();
-            return true;   // ✅ УСПЕХ
+            return true;
 
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;  // ✅ ОШИБКА
+            return false;
         }
     }
 

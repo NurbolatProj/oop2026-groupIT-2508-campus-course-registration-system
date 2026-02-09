@@ -1,6 +1,6 @@
-package kz.aitu.services;
+package kz.aitu.UseCaseComponent;
 
-import kz.aitu.entities.Student;
+import kz.aitu.CoreComponent.entities.Student;
 import kz.aitu.exceptions.InvalidInputException;
 import kz.aitu.repositories.StudentRepository;
 

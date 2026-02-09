@@ -1,4 +1,6 @@
-package kz.aitu.db;
+package kz.aitu.DataComponent;
+
+import kz.aitu.db.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.SQLException;

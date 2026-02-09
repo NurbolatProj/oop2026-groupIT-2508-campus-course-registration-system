@@ -1,8 +1,8 @@
-package kz.aitu.repositories;
+package kz.aitu.DataComponent;
 
-import kz.aitu.db.IDB;
-import kz.aitu.entities.Student;
+import kz.aitu.CoreComponent.entities.Student;
 import kz.aitu.exceptions.NotFoundException;
+import kz.aitu.repositories.StudentRepository;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
 package kz.aitu.repositories;
 
-import kz.aitu.entities.Course;
+import kz.aitu.CoreComponent.entities.Course;
 
 public interface CourseRepository extends Repository<Course> {
 

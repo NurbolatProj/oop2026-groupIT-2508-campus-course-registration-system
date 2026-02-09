@@ -1,4 +1,4 @@
-package kz.aitu.entities;
+package kz.aitu.CoreComponent.entities;
 
 public class Course {
     private int id;

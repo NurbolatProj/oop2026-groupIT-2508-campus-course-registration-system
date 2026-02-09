@@ -1,4 +1,7 @@
-package kz.aitu.entities;
+package kz.aitu.BuilderComponent;
+
+import kz.aitu.CoreComponent.entities.Course;
+import kz.aitu.CoreComponent.entities.Student;
 
 import java.util.List;
 
@@ -29,7 +32,7 @@ public class StudentSchedule {
         public Builder student(Student student) {
             this.student = student;
             return this;
-        }
+        }   
 
         public Builder courses(List<Course> courses) {
             this.courses = courses;

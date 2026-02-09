@@ -1,9 +1,10 @@
-package kz.aitu;
+package kz.aitu.UICLIComponent;
 
-import kz.aitu.db.IDB;
-import kz.aitu.db.PostgresDB;
+import kz.aitu.DataComponent.*;
+import kz.aitu.UseCaseComponent.CourseService;
+import kz.aitu.UseCaseComponent.EnrollmentService;
+import kz.aitu.UseCaseComponent.StudentService;
 import kz.aitu.repositories.*;
-import kz.aitu.services.*;
 
 import java.util.Scanner;
 
@@ -44,8 +45,6 @@ public class Main {
 
             System.out.print("Choose option: ");
             int choice = scanner.nextInt();
-            scanner.nextLine();
-
 
             try {
                 switch (choice) {
@@ -110,6 +109,7 @@ public class Main {
 
 
                     case 3 -> {
+                        scanner.nextLine();
 
                         System.out.print("Student name: ");
 

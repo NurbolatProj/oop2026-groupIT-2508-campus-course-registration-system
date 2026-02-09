@@ -1,6 +1,6 @@
 package kz.aitu.repositories;
 
-import kz.aitu.entities.Enrollment;
+import kz.aitu.CoreComponent.entities.Enrollment;
 import java.util.List;
 
 public interface EnrollmentRepository {

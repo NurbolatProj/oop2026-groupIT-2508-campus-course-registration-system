@@ -1,7 +1,7 @@
-package kz.aitu.repositories;
+package kz.aitu.DataComponent;
 
-import kz.aitu.db.IDB;
-import kz.aitu.entities.Course;
+import kz.aitu.CoreComponent.entities.Course;
+import kz.aitu.repositories.CourseRepository;
 
 import java.sql.*;
 import java.util.ArrayList;

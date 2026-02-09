@@ -1,6 +1,6 @@
-package kz.aitu.repositories;
+package kz.aitu.DataComponent;
 
-import kz.aitu.db.IDB;
+import kz.aitu.repositories.ClassroomRepository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -1,4 +1,4 @@
-package kz.aitu.db;
+package kz.aitu.DataComponent;
 
 import java.sql.Connection;
 

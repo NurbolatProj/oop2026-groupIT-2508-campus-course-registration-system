@@ -1,6 +1,6 @@
-package kz.aitu.factory;
+package kz.aitu.BuilderComponent;
 
-import kz.aitu.entities.Course;
+import kz.aitu.CoreComponent.entities.Course;
 
 public class CourseFactory {
 

@@ -1,8 +1,8 @@
-package kz.aitu.services;
+package kz.aitu.UseCaseComponent;
 
-import kz.aitu.entities.Course;
-import kz.aitu.entities.Result;
-import kz.aitu.factory.CourseFactory;
+import kz.aitu.CoreComponent.entities.Course;
+import kz.aitu.CoreComponent.entities.Result;
+import kz.aitu.BuilderComponent.CourseFactory;
 import kz.aitu.repositories.CourseRepository;
 
 import java.util.List;

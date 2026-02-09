@@ -1,9 +1,9 @@
-package kz.aitu.services;
+package kz.aitu.UseCaseComponent;
 
-import kz.aitu.entities.Enrollment;
-import kz.aitu.entities.Student;
-import kz.aitu.entities.Course;
-import kz.aitu.entities.StudentSchedule;
+import kz.aitu.CoreComponent.entities.Enrollment;
+import kz.aitu.CoreComponent.entities.Student;
+import kz.aitu.CoreComponent.entities.Course;
+import kz.aitu.BuilderComponent.StudentSchedule;
 import kz.aitu.exceptions.ConflictException;
 import kz.aitu.repositories.EnrollmentRepository;
 
